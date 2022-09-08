@@ -17,6 +17,7 @@
 <script>
 import ToDosContainer from './components/ToDosContainer.vue';
 import ToDoForm from './components/ToDoForm.vue';
+import { fetchToDos } from './utils';
 
 export default {
   name: 'App',
@@ -45,16 +46,18 @@ export default {
     saveToDos() {
       const parsed = JSON.stringify(this.toDos);
       localStorage.setItem('toDos', parsed);
-    }
+    },
+    getToDos() {
+      const toDosData = fetchToDos();
+      console.log(toDosData);
+      const toDosText = [];
+      toDosData.forEach(toDo => toDosText.push(toDo.description));
+      return toDosText;
+    }, 
   },
   mounted() {
-    if (localStorage.getItem('toDos')) {
-      try {
-        this.toDos = JSON.parse(localStorage.getItem('toDos'));
-      } catch(e) {
-        localStorage.removeItem('toDos');
-      }
-    }
+    console.log('App initiated');
+    this.toDos = this.getToDos();
   },
 }
 </script>
