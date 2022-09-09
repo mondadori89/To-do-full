@@ -2,16 +2,20 @@
     <div class="toDoItem">
         <p class="to-do">{{ toDo }}</p>
         <div class="item-icons"> 
-          <p :name="checkButtonClicked" class="item-icon check" @click="checkToDo" >check</p>
-          <p :name="removeButtonState" class="item-icon remove" @click="$parent.$emit('removedClicked', toDo)" 
-            @mouseenter="removeButtonState = 'xcirclefill'" @mouseleave="removeButtonState = 'xcircle'" 
-          >delete</p>
+          <Icon :name="checkButtonClicked" class="item-icon check" @click="checkToDo" />
+          <Icon :name="removeButtonState" class="item-icon remove" 
+            @click="$parent.$emit('removedClicked', toDo)" 
+            @mouseover="removeButtonState = 'xcirclefill'" 
+            @mouseleave="removeButtonState = 'xcircle'" 
+          />
         </div>
     </div> 
 </template>
 
 
 <script>
+import Icon from '../assets/IconSelected.vue';
+
 export default {
   name: 'ToDoItem',
   props: {
@@ -24,6 +28,7 @@ export default {
       }
   },
   components: {
+    Icon
   },
   methods: {
     checkToDo() {
@@ -71,7 +76,6 @@ export default {
   color: rgb(129, 0, 0);
   margin-right: 10px;
 }
-
 
 @media only screen and (max-width: 480px) {
   p {

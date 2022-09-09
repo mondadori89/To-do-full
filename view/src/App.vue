@@ -43,21 +43,21 @@ export default {
       console.log(this.toDos);
       this.saveToDos();
     },
-    saveToDos() {
+    saveToDos() {                                     // isso vai cair fora...
       const parsed = JSON.stringify(this.toDos);
       localStorage.setItem('toDos', parsed);
     },
-    getToDos() {
-      const toDosData = fetchToDos();
+    async getToDos() {
+      const toDosData = await fetchToDos();
       console.log(toDosData);
       const toDosText = [];
       toDosData.forEach(toDo => toDosText.push(toDo.description));
       return toDosText;
     }, 
   },
-  mounted() {
+  async mounted() {
     console.log('App initiated');
-    this.toDos = this.getToDos();
+    this.toDos = await this.getToDos();
   },
 }
 </script>

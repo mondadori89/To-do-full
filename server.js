@@ -1,9 +1,11 @@
 const express = require('express');
+var cors = require('cors');
 require('dotenv').config();
 const todosRoutes = require('./routes/todos');
 
 // Running express server
 const app = express();
+app.use(cors());
 
 const port = process.env.PORT || 8000;
 
