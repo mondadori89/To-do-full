@@ -17,7 +17,7 @@
 <script>
 import ToDosContainer from './components/ToDosContainer.vue';
 import ToDoForm from './components/ToDoForm.vue';
-import { fetchToDos } from './utils';
+import { fetchToDos, postToDo } from './utils';
 
 export default {
   name: 'App',
@@ -31,21 +31,17 @@ export default {
     }
   },
   methods: {
-    onSubmitClicked(value) {
+    async onSubmitClicked(value) {
       this.toDos.push(value);
       console.log(this.toDos);
-      this.saveToDos();
+      await postToDo(value);
     },
     onRemovedClicked(value) {
       this.toDos = this.toDos.filter(toDo => {
         return toDo !== value;
       })
       console.log(this.toDos);
-      this.saveToDos();
-    },
-    saveToDos() {                                     // isso vai cair fora...
-      const parsed = JSON.stringify(this.toDos);
-      localStorage.setItem('toDos', parsed);
+      // add DELETE request
     },
     async getToDos() {
       const toDosData = await fetchToDos();

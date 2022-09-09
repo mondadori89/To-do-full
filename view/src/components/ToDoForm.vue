@@ -1,15 +1,15 @@
 <template>
 <div class="ToDoFormContainer">
     <form id="toDoForm" v-on:submit.prevent="handleSubmit" >
-    <input type="text" v-model="toDoOnForm" />
-    <br />
-    <br />
-    <button 
-        type="submit"
-        @click="$emit('submitClicked', toDoOnForm)"
-    > 
-        Go do it!
-    </button>
+        <input type="text" v-model="toDoOnForm" />
+        <br />
+        <br />
+        <button 
+            type="submit"
+            @click="$emit('submitClicked', toDoOnForm)"
+        > 
+            Go do it!
+        </button>
     </form>
 </div>
 </template>

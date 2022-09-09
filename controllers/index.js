@@ -7,6 +7,7 @@ exports.getAll = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
+    console.log("Post requested");
     const { description } = req.body;
     console.log(description);
     const newTodo = await pool.query( 'INSERT INTO to_dos (description, status) VALUES ($1, false)', [description] );
