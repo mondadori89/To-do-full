@@ -9,6 +9,10 @@ app.use(cors());
 
 const port = process.env.PORT || 8000;
 
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('view/dist'));
+}
+
 app.get('/', (req, res) => {
     res.status(200).send('<h1>Wazaazaaa!</h1>')
 });
@@ -19,5 +23,5 @@ app.use(express.json());
 app.use('/api', todosRoutes);
 
 app.listen(port, () => {
-    console.log(`App listening at http://localhost:${port}`);
+    console.log(`App listening at Port ${port}`);
 });

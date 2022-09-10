@@ -2,7 +2,7 @@ const pool = require('../models/database');
 
 exports.getAll = async (req, res) => {
     console.log("Get All requested");
-    const allToDosList = await pool.query( 'SELECT * FROM to_dos' );
+    const allToDosList = await pool.query( 'SELECT * FROM to_dos ORDER BY description' );
     return res.status(200).send(allToDosList.rows);
 };
 

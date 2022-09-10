@@ -46,7 +46,6 @@ export default {
     }
   },
   async mounted() {
-    console.log('Todo loaded');
     const toDoFetched = await fetchToDo(this.toDo.id);
     if (toDoFetched.status) {
       this.checkButtonClicked = 'checkcirclefill';
