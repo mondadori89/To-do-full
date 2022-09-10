@@ -10,7 +10,7 @@ app.use(cors());
 const port = process.env.PORT || 8000;
 
 if (process.env.NODE_ENV === 'production') {
-	app.use(express.static('view/dist'));
+	app.use(express.static(__dirname + '/view/dist'));
 }
 
 app.get('/', (req, res) => {
