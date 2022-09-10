@@ -1,4 +1,9 @@
-const apiURL = 'http://localhost:8000/api';
+let apiURL = '';
+if (process.env.NODE_ENV === 'production') {
+	apiURL = 'https://to-do-full.herokuapp.com/api';
+} else {
+    apiURL = 'http://localhost:8000/api';
+}
 
 export const fetchToDos = async () => {
     const res = await fetch(`${apiURL}/all`);
