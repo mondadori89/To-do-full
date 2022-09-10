@@ -17,7 +17,8 @@
 <script>
 import ToDosContainer from './components/ToDosContainer.vue';
 import ToDoForm from './components/ToDoForm.vue';
-import { fetchToDos, postToDo } from './utils';
+import { v4 as uuidv4 } from 'uuid';
+import { fetchToDos, postToDo, deleteToDo } from './utils';
 
 export default {
   name: 'App',
@@ -31,23 +32,29 @@ export default {
     }
   },
   methods: {
-    async onSubmitClicked(value) {
-      this.toDos.push(value);
+    async onSubmitClicked(toDoText) {
+      const newTodo = {
+        id: uuidv4(),
+        description: toDoText,
+        status: false
+      }
+      this.toDos.push(newTodo);
       console.log(this.toDos);
-      await postToDo(value);
+      await postToDo(newTodo);
     },
-    onRemovedClicked(value) {
+    async onRemovedClicked(toDoDeleted) {
+      const toDoDeletedID = toDoDeleted.id;
       this.toDos = this.toDos.filter(toDo => {
-        return toDo !== value;
+        return toDo !== toDoDeleted;
       })
       console.log(this.toDos);
-      // add DELETE request
+      await deleteToDo(toDoDeletedID);
     },
     async getToDos() {
       const toDosData = await fetchToDos();
       console.log(toDosData);
       const toDosText = [];
-      toDosData.forEach(toDo => toDosText.push(toDo.description));
+      toDosData.forEach(toDo => toDosText.push(toDo));
       return toDosText;
     }, 
   },

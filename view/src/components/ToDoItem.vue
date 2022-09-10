@@ -1,6 +1,6 @@
 <template>
     <div class="toDoItem">
-        <p class="to-do">{{ toDo }}</p>
+        <p class="to-do">{{ toDo.description }}</p>
         <div class="item-icons"> 
           <Icon :name="checkButtonClicked" class="item-icon check" @click="checkToDo" />
           <Icon :name="removeButtonState" class="item-icon remove" 
@@ -15,11 +15,12 @@
 
 <script>
 import Icon from '../assets/IconSelected.vue';
+import { checkToDoStatus, fetchToDo } from '../utils';
 
 export default {
   name: 'ToDoItem',
   props: {
-    toDo: String
+    toDo: Object
   },
   data() {
       return {
@@ -31,13 +32,27 @@ export default {
     Icon
   },
   methods: {
-    checkToDo() {
+    async checkToDo() {
+      const id = this.toDo.id;
+      this.changeCheckIcon();
+      await checkToDoStatus(id);
+    },
+    changeCheckIcon() {
       if (this.checkButtonClicked === 'checkcircle') { 
           this.checkButtonClicked = 'checkcirclefill';
       } else {
           this.checkButtonClicked = 'checkcircle';
       }
-    },
+    }
+  },
+  async mounted() {
+    console.log('Todo loaded');
+    const toDoFetched = await fetchToDo(this.toDo.id);
+    if (toDoFetched.status) {
+      this.checkButtonClicked = 'checkcirclefill';
+    } else {
+      this.checkButtonClicked = 'checkcircle';
+    }
   },
 }
 </script>
