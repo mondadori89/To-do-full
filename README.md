@@ -16,5 +16,6 @@ MVC Architecture. </br>
 
 ## Deploy
 
-- To deploy on Heroku you have to uncomment the "ssl: { rejectUnauthorized: false }," on ./models/database.js line 10
-
+- Use: `npm run build` on the view folder to build the frontend aplication to be deployed
+- Commit on `main` branch
+- On Heroku, deploy the app
