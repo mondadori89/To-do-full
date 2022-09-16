@@ -7,8 +7,7 @@
   />
 
   <ToDosContainer 
-    :toDos="toDos"
-    @removedClicked="onRemovedClicked" 
+    :newTodo="newTodo"
   />
     
 </template>
@@ -18,7 +17,7 @@
 import ToDosContainer from './components/ToDosContainer.vue';
 import ToDoForm from './components/ToDoForm.vue';
 import { v4 as uuidv4 } from 'uuid';
-import { fetchToDos, postToDo, deleteToDo } from './utils';
+import { postToDo } from './utils';
 
 export default {
   name: 'App',
@@ -28,7 +27,7 @@ export default {
   },
   data() {
     return {
-      toDos: [],
+      newTodo: {},
     }
   },
   methods: {
@@ -38,29 +37,12 @@ export default {
         description: toDoText,
         status: false
       }
-      this.toDos.push(newTodo);
-      console.log(this.toDos);
+      this.newTodo = newTodo;
       await postToDo(newTodo);
-    },
-    async onRemovedClicked(toDoDeleted) {
-      const toDoDeletedID = toDoDeleted.id;
-      this.toDos = this.toDos.filter(toDo => {
-        return toDo !== toDoDeleted;
-      })
-      console.log(this.toDos);
-      await deleteToDo(toDoDeletedID);
-    },
-    async getToDos() {
-      const toDosData = await fetchToDos();
-      console.log(toDosData);
-      const toDosText = [];
-      toDosData.forEach(toDo => toDosText.push(toDo));
-      return toDosText;
     }, 
   },
   async mounted() {
     console.log('App initiated');
-    this.toDos = await this.getToDos();
   },
 }
 </script>
