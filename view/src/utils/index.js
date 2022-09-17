@@ -49,10 +49,23 @@ export const checkToDoStatus = async (id) => {
     });
     console.log(res.status);
     return null;
-}
+};
 
 export const fetchToDo = async (id) => {
     const res = await fetch(`${apiURL}/${id}`);
     const dataFetched = res.json();
     return dataFetched;
-}
+};
+
+export const setListOrderAsync = async (id, newListOrder) => {
+    const newListOrderJson = JSON.stringify(newListOrder);
+    const res = await fetch(`${apiURL}/setListOrder/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        body: newListOrderJson,
+    });
+    console.log(res.status);
+    return null;
+};

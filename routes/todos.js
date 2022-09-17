@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { create, getAll, getToDo, remove, updateStatus } = require('../controllers/index');
+const { create, getAll, getToDo, remove, updateStatus, setListOrder } = require('../controllers/index');
 
 // List of all to dos
 router.get('/all', getAll);
@@ -18,5 +18,8 @@ router.delete('/remove/:id', remove);
 
 // change a to do status
 router.put('/updateStatus/:id', updateStatus);
+
+// set the order of how the to dos should be on first render
+router.put('/setListOrder/:id', setListOrder);
 
 module.exports = router;
