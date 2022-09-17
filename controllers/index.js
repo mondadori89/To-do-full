@@ -39,3 +39,10 @@ exports.updateStatus = async (req, res) => {
         return res.status(200).send(`To do status updated to false`);
     }
 };
+
+exports.setListOrder = async (req, res) => {
+    const id = req.params.id;
+    const listOrder = req.body;
+    const listUpdated = await pool.query( 'UPDATE to_dos_order SET order_seq = $1 WHERE id = $2', [listOrder, id]);
+    return res.status(200).send(listUpdated.rows);
+};

@@ -21,7 +21,7 @@
 import { defineComponent } from 'vue'
 import { VueDraggableNext } from 'vue-draggable-next'
 import ToDoItem from './ToDoItem.vue'
-import { fetchToDos, deleteToDo } from '../utils';
+import { fetchToDos, deleteToDo, setListOrderAsync } from '../utils';
 
 export default defineComponent ({
   name: 'ToDosContainer',
@@ -37,14 +37,16 @@ export default defineComponent ({
     return {
       enabled: true,
       list: [],
+      listOrder: [],
       dragging: false,
       newToDoOnData: {},
     };
   },
   methods: {
-    log(event) {
+    async log(event) {
       console.log(event);
       console.log(this.list);
+      await this.setListOrder();
     },
     async getToDos() {
       const toDosData = await fetchToDos();
@@ -60,11 +62,21 @@ export default defineComponent ({
       console.log(this.list);
       await deleteToDo(toDoDeletedID);
     },
+    async setListOrder() {
+      const toDoList = this.list;
+      const toDosIds = [];
+      toDoList.forEach(toDo => toDosIds.push(toDo.id));
+      this.listOrder = toDosIds;
+      console.log(this.listOrder);
+      const listID = '8a23bf6d-4030-42fe-b54a-b59a9a32d958';      // Hard coded for now...
+      await setListOrderAsync(listID, toDosIds);
+    },
   },
   watch: {
-    newTodo: function () {
+    newTodo: async function () {
       console.log("new to do added");
       this.list.push(this.newTodo);
+      await this.setListOrder();
     }
   },
   async mounted() {
