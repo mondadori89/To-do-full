@@ -21,7 +21,7 @@
 import { defineComponent } from 'vue'
 import { VueDraggableNext } from 'vue-draggable-next'
 import ToDoItem from './ToDoItem.vue'
-import { fetchToDos, deleteToDo, setListOrderAsync } from '../utils';
+import { fetchToDos, deleteToDo, setListOrderAsync, fetchListOrder } from '../utils';
 
 export default defineComponent ({
   name: 'ToDosContainer',
@@ -49,10 +49,18 @@ export default defineComponent ({
       await this.setListOrder();
     },
     async getToDos() {
+      const listOrderFetched = await fetchListOrder('8a23bf6d-4030-42fe-b54a-b59a9a32d958');    // Hard coded for now...
+      const lisrOrderArray = listOrderFetched.order_seq;
       const toDosData = await fetchToDos();
-      const toDosText = [];
-      toDosData.forEach(toDo => toDosText.push(toDo));
-      return toDosText;
+      let toDosListOrdered = [];
+      for (const toDoId of lisrOrderArray) {
+        for (const toDoItem of toDosData) {
+          if (toDoId == toDoItem.id) {
+            toDosListOrdered.push(toDoItem);
+          }
+        }
+      }
+      return toDosListOrdered;
     },
     async onRemovedClicked(toDoDeleted) {
       const toDoDeletedID = toDoDeleted.id;
@@ -60,6 +68,7 @@ export default defineComponent ({
         return toDo !== toDoDeleted;
       })
       console.log(this.list);
+      this.setListOrder();
       await deleteToDo(toDoDeletedID);
     },
     async setListOrder() {
@@ -67,7 +76,7 @@ export default defineComponent ({
       const toDosIds = [];
       toDoList.forEach(toDo => toDosIds.push(toDo.id));
       this.listOrder = toDosIds;
-      console.log(this.listOrder);
+      // console.log(this.listOrder);
       const listID = '8a23bf6d-4030-42fe-b54a-b59a9a32d958';      // Hard coded for now...
       await setListOrderAsync(listID, toDosIds);
     },
