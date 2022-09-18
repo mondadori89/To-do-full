@@ -46,3 +46,9 @@ exports.setListOrder = async (req, res) => {
     const listUpdated = await pool.query( 'UPDATE to_dos_order SET order_seq = $1 WHERE id = $2', [listOrder, id]);
     return res.status(200).send(listUpdated.rows);
 };
+
+exports.getListOrder = async (req, res) => {
+    const id = req.params.id;
+    const listqueried = await pool.query( 'SELECT order_seq FROM to_dos_order WHERE id = $1', [id]);
+    return res.status(200).send(listqueried.rows[0]);
+};

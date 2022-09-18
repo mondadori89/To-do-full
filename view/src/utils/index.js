@@ -69,3 +69,9 @@ export const setListOrderAsync = async (id, newListOrder) => {
     console.log(res.status);
     return null;
 };
+
+export const fetchListOrder = async (id) => {
+    const res = await fetch(`${apiURL}/getListOrder/${id}`);
+    const listOrderFetched = res.json();
+    return listOrderFetched;
+};
