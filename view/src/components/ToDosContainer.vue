@@ -111,9 +111,20 @@ ul {
   padding: 0;
 }
 
-/*.dragArea {
+.m {
+  animation: animateDragDrop 0.5s ease forwards;
+}
 
-}*/
-
+@keyframes animateDragDrop {
+  0% {
+    transform: scale(1)
+  }
+  50% {
+    transform: scale(0.9)
+  }
+  100% {
+    transform: scale(1)
+  }
+}
 
 </style>
