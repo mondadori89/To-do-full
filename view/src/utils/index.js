@@ -14,8 +14,9 @@ if (process.env.NODE_ENV === 'production') {
 
 // To dos APIs
 
-export const fetchToDos = async () => {
-    const res = await fetch(`api/all`);
+export const fetchToDos = async (userId) => {
+    console.log('User fetching to dos: ' + userId)
+    const res = await fetch(`api/all/${userId}`);
     const dataFetched = res.json();
     return dataFetched;
 };
@@ -67,9 +68,9 @@ export const fetchToDo = async (id) => {
     return dataFetched;
 };
 
-export const setListOrderAsync = async (id, newListOrder) => {
+export const setListOrderAsync = async (listUserID, newListOrder) => {
     const newListOrderJson = JSON.stringify(newListOrder);
-    const res = await fetch(`api/setListOrder/${id}`, {
+    const res = await fetch(`api/setListOrder/${listUserID}`, {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json',
@@ -80,8 +81,9 @@ export const setListOrderAsync = async (id, newListOrder) => {
     return null;
 };
 
-export const fetchListOrder = async (id) => {
-    const res = await fetch(`api/getListOrder/${id}`);
+export const fetchListOrder = async (userId) => {
+    console.log('User fetching list: ' + userId)
+    const res = await fetch(`api/getListOrder/${userId}`);
     const listOrderFetched = res.json();
     return listOrderFetched;
 };

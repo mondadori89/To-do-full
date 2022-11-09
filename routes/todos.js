@@ -5,7 +5,7 @@ const router = express.Router();
 const { create, getAll, getToDo, remove, updateStatus, setListOrder, getListOrder } = require('../controllers/index');
 
 // List of all to dos
-router.get('/all', getAll);
+router.get('/all/:id', getAll);
 
 // get a single to do
 router.get('/:id', getToDo);

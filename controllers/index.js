@@ -1,8 +1,10 @@
 const pool = require('../models/database');
 
 exports.getAll = async (req, res) => {
+    const userId = req.params.id;
     console.log("Get All requested");
-    const allToDosList = await pool.query( 'SELECT * FROM to_dos ORDER BY description' );
+    console.log("user id to fetch to dos: " + userId);
+    const allToDosList = await pool.query( 'SELECT * FROM to_dos WHERE user_id = $1 ORDER BY description', [userId] );
     return res.status(200).send(allToDosList.rows);
 };
 
@@ -41,15 +43,16 @@ exports.updateStatus = async (req, res) => {
 };
 
 exports.setListOrder = async (req, res) => {
-    const id = req.params.id;
+    const userId = req.params.id;
     const listOrder = req.body;
-    const listUpdated = await pool.query( 'UPDATE to_dos_order SET order_seq = $1 WHERE id = $2', [listOrder, id]);
+    const listUpdated = await pool.query( 'UPDATE to_dos_order SET order_seq = $1 WHERE user_id = $2', [listOrder, userId]);
     return res.status(200).send(listUpdated.rows);
 };
 
 exports.getListOrder = async (req, res) => {
-    const id = req.params.id;
-    const listqueried = await pool.query( 'SELECT order_seq FROM to_dos_order WHERE id = $1', [id]);
+    const userId = req.params.id;
+    console.log('getListOrder user id: ' + userId)
+    const listqueried = await pool.query( 'SELECT order_seq FROM to_dos_order WHERE user_id = $1', [userId]);
     return res.status(200).send(listqueried.rows[0]);
 };
 

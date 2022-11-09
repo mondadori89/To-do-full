@@ -10,7 +10,7 @@
                 Login
             </button>
         </form>
-        <h3>Hello {{userName}}!</h3>
+        <h3 v-if="userName">Hello {{userName}}!</h3>
     </header>
 </template>
 

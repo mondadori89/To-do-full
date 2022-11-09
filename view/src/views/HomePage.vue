@@ -6,6 +6,7 @@
 
   <ToDosContainer 
     :newTodo="newTodo"
+    :userId="userId"
   />
 </template>
 

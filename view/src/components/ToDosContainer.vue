@@ -21,7 +21,7 @@
 import { defineComponent } from 'vue'
 import { VueDraggableNext } from 'vue-draggable-next'
 import ToDoItem from './ToDoItem.vue'
-import { fetchToDos, deleteToDo, setListOrderAsync, fetchListOrder } from '../utils';
+import { fetchToDos, deleteToDo, setListOrderAsync, fetchListOrder, getUser } from '../utils';
 
 export default defineComponent ({
   name: 'ToDosContainer',
@@ -32,6 +32,7 @@ export default defineComponent ({
   props: {
     toDos: Array,
     newTodo: Object,
+    userId: String,
   },
   data() {
     return {
@@ -49,9 +50,13 @@ export default defineComponent ({
       await this.setListOrder();
     },
     async getToDos() {
-      const listOrderFetched = await fetchListOrder('8a23bf6d-4030-42fe-b54a-b59a9a32d958');    // Hard coded for now...
+      const userData = await getUser();
+      console.log(userData);
+      console.log(this.userId);
+      const toDosData = await fetchToDos(this.userId);
+      const listOrderFetched = await fetchListOrder(this.userId);
       const lisrOrderArray = listOrderFetched.order_seq;
-      const toDosData = await fetchToDos();
+
       let toDosListOrdered = [];
       for (const toDoId of lisrOrderArray) {
         for (const toDoItem of toDosData) {
@@ -77,8 +82,8 @@ export default defineComponent ({
       toDoList.forEach(toDo => toDosIds.push(toDo.id));
       this.listOrder = toDosIds;
       // console.log(this.listOrder);
-      const listID = '8a23bf6d-4030-42fe-b54a-b59a9a32d958';      // Hard coded for now...
-      await setListOrderAsync(listID, toDosIds);
+      const listUserID = this.userId;      // Hard coded for now...
+      await setListOrderAsync(listUserID, toDosIds);
     },
   },
   watch: {
@@ -86,6 +91,10 @@ export default defineComponent ({
       console.log("new to do added");
       this.list.push(this.newTodo);
       await this.setListOrder();
+    },
+    userId: async function () {
+      console.log("new guy on the house");
+      this.list = await this.getToDos();
     }
   },
   async mounted() {

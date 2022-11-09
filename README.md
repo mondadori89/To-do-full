@@ -31,17 +31,17 @@ MVC Architecture. </br>
 Backend: 
     - Register OK
     - Login OK
-    - Session
+    - Session OK
 
 Frontend: 
     - Página de Login 
-    - Página de to dos com nome do usuário
+    - Página de to dos com nome do usuário OK
     - Página de Register
 
 Backend: 
     - Middleware auth
-    - Filtrar to dos dos user
+    - Filtrar to dos dos user OK
 
 Frontend:
-    - Filtrar to dos dos user
+    - Filtrar to dos dos user OK
 
