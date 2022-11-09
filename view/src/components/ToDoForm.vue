@@ -24,7 +24,6 @@ export default {
         return {
         toDoOnForm: '',
         }
-
     },
     methods: {
         handleSubmit(e) {

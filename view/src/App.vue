@@ -1,54 +1,68 @@
 <template>
+  <HeaderComp 
+    @submitLogin="onSubmitLogin"
+    :userName="userName"
+  />
+
+  <button id="log" @click="onGetUserInfoFromSession">Log user info</button>
 
   <h1>To do list</h1>
-  
-  <ToDoForm 
-    @submitClicked="onSubmitClicked"
-  />
 
-  <ToDosContainer 
-    :newTodo="newTodo"
-  />
-    
+  <router-view :userId="userId"></router-view>
+  <FooterComp /> 
+ 
 </template>
 
 
 <script>
-import ToDosContainer from './components/ToDosContainer.vue';
-import ToDoForm from './components/ToDoForm.vue';
-import { v4 as uuidv4 } from 'uuid';
-import { postToDo } from './utils';
+import HeaderComp from './components/HeaderComp.vue';
+import FooterComp from './components/FooterComp.vue';
+import { loginApi, getUser } from './utils';
 
 export default {
   name: 'App',
   components: {
-    ToDosContainer,
-    ToDoForm,
+    HeaderComp,
+    FooterComp,
   },
   data() {
     return {
-      newTodo: {},
+      userId: '',
+      userEmail: '',
+      userName: '',
     }
   },
   methods: {
-    async onSubmitClicked(toDoText) {
-      const newTodo = {
-        id: uuidv4(),
-        description: toDoText,
-        status: false
-      }
-      this.newTodo = newTodo;
-      await postToDo(newTodo);
-    }, 
+
+    async onSubmitLogin({email, password}) {
+      const userFetched = await loginApi(email, password);
+      this.userId = userFetched.id;
+      this.userEmail = userFetched.email;
+      this.userName = userFetched.name;
+    },
+
+    async onGetUserInfoFromSession() {
+      const userFetched = await getUser();
+      console.log(userFetched.user);
+      this.userId = userFetched.user.id;
+      this.userEmail = userFetched.user.email;
+      this.userName = userFetched.user.name;
+    }
+
   },
   async mounted() {
     console.log('App initiated');
+    this.onGetUserInfoFromSession();
   },
 }
 </script>
 
 
 <style>
+
+#log {
+  margin-top: 20px;
+}
 
 @media only screen and (max-width: 480px) {
   body {

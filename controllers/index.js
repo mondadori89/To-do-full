@@ -15,9 +15,9 @@ exports.getToDo = async (req, res) => {
 
 exports.create = async (req, res) => {
     console.log("Post requested");
-    const { id, description, status } = req.body;
+    const { id, description, status, user_id } = req.body;
     console.log(description);
-    const newTodo = await pool.query( 'INSERT INTO to_dos (id, description, status) VALUES ($1, $2, $3)', [id, description, status] );
+    const newTodo = await pool.query( 'INSERT INTO to_dos (id, description, status, user_id) VALUES ($1, $2, $3, $4)', [id, description, status, user_id] );
     return res.status(201).send('New to do included');
 };
 
@@ -51,4 +51,26 @@ exports.getListOrder = async (req, res) => {
     const id = req.params.id;
     const listqueried = await pool.query( 'SELECT order_seq FROM to_dos_order WHERE id = $1', [id]);
     return res.status(200).send(listqueried.rows[0]);
+};
+
+exports.validateLogin = async (req, res, next) => {
+    const { email, password } = req.body;
+
+    const userFetched = await pool.query( 'SELECT * FROM users WHERE email = $1', [email]);
+    const user = userFetched.rows[0];
+
+    if (!user) {
+        console.log("Beeee wrong email!")
+        res.status(401).json({ msg: "Wrong username or password" }.end);
+        return;
+    }
+
+    if (user.password !== password) {
+        console.log("Beeee wrong password!")
+        res.status(401).json({ msg: "Wrong username or password" }).end;
+        return;
+    }
+
+    req.user = user;
+    return next();
 };

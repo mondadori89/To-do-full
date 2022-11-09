@@ -33,3 +33,27 @@ CREATE TABLE to_dos_order(
     SELECT order_seq[1]
     FROM to_dos_order;
 
+
+-- Create users table
+CREATE TABLE users (                
+    id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    password VARCHAR(200)
+);
+
+-- Update the to dos table with the user ID on the to dos
+ALTER TABLE to_dos                
+ADD COLUMN user_id uuid;
+
+ALTER TABLE to_dos
+ADD FOREIGN KEY (user_id)
+REFERENCES users (id);
+
+-- Update the to dos order table with the user ID on the order lists
+ALTER TABLE to_dos_order                
+ADD COLUMN user_id uuid;
+
+ALTER TABLE to_dos_order
+ADD FOREIGN KEY (user_id)
+REFERENCES users (id);
