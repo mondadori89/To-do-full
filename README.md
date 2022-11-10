@@ -34,12 +34,12 @@ Backend:
     - Session OK
 
 Frontend: 
-    - Página de Login 
+    - Página de Login  OK
     - Página de to dos com nome do usuário OK
     - Página de Register
 
 Backend: 
-    - Middleware auth
+    - Register user
     - Filtrar to dos dos user OK
 
 Frontend:

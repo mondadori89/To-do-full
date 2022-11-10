@@ -48,6 +48,27 @@ loginRouter.post('/', validateLogin, (req, res) => {
 });
 
 
+loginRouter.get('/logout', (req, res) => {
+    if (!req.headers.cookie) {
+        res.status(401).json({msg: 'No cookie on jar'}).end()
+		console.log('no cookie =(')
+        return
+    }
+
+    const sessionToken = req.headers.cookie.split('=')[1];
+	console.log('SessionToken >> ', sessionToken);
+
+    if (!sessionToken) {
+        res.status(401).end()
+        console.log('no session token =(')
+        return
+    }
+
+	delete sessions[sessionToken]
+
+	res.json({msg: 'session eliminated'}).end()
+});
+
 module.exports = {
     sessions,
 	loginRouter

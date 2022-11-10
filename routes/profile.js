@@ -8,7 +8,7 @@ const { sessions } = require('./login');
 const sessionHandler = (req, res) => {
 
 	if (!req.headers.cookie) {
-        res.status(401).json({msg: 'Não autorizado'}).end()
+        res.status(401).json({msg: 'No cookie on jar'}).end()
 		console.log('no cookie =(')
         return
     }

@@ -1,6 +1,7 @@
 <template>
   <HeaderComp 
     @submitLogin="onSubmitLogin"
+    @submitLogout="onSubmitLogout"
     :userName="userName"
   />
 
@@ -17,7 +18,7 @@
 <script>
 import HeaderComp from './components/HeaderComp.vue';
 import FooterComp from './components/FooterComp.vue';
-import { loginApi, getUser } from './utils';
+import { loginApi, logoutApi, getUser } from './utils';
 
 export default {
   name: 'App',
@@ -27,7 +28,7 @@ export default {
   },
   data() {
     return {
-      userId: '2944c000-e638-443d-a3b8-38461c3d2807',
+      userId: '',
       userEmail: '',
       userName: '',
     }
@@ -40,6 +41,15 @@ export default {
       this.userEmail = userFetched.email;
       this.userName = userFetched.name;
     },
+
+    async onSubmitLogout() {
+      console.log("you are about to logout");
+      await logoutApi();
+      this.userId = '';
+      this.userEmail = '';
+      this.userName = '';
+      console.log("logout done");
+    }, 
 
     async onGetUserInfoFromSession() {
       const userFetched = await getUser();

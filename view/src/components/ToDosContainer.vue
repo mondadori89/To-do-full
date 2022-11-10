@@ -1,5 +1,5 @@
 <template>
-  <div class="toDosContainer">
+  <div v-if="userId" class="toDosContainer">
     <h2>To do's:</h2>
     <draggable class="dragArea list-group w-full" :list="list" @change="log">
       <div
@@ -93,7 +93,7 @@ export default defineComponent ({
       await this.setListOrder();
     },
     userId: async function () {
-      console.log("new guy on the house");
+      console.log("new guy (or no guy) on the house");
       this.list = await this.getToDos();
     }
   },

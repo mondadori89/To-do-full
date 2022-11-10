@@ -112,6 +112,14 @@ export const loginApi = async (email, password) => {
     return userFetched;
 };
 
+export const logoutApi = async () => {
+    const res = await fetch(`api/login/logout`, cors(corsOptions), { 
+        method: 'GET',
+        withCredentials: true,
+    });
+    const dataFetched = res.json();
+    return dataFetched;
+};
 
 var corsOptions = {
     origin: 'http://localhost:8000',

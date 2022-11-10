@@ -1,13 +1,20 @@
 <template>
     <header>
         <form id="loginForm" v-on:submit.prevent="handleSubmit">
-            <input type="text" v-model="email" placeholder="Email"/>
-            <input type="password" v-model="password" placeholder="Password"/>
+            <input v-if="!userName" type="text" v-model="email" placeholder="Email"/>
+            <input v-if="!userName" type="password" v-model="password" placeholder="Password"/>
             <button 
+                v-if="!userName"
                 type="submit"
                 @click="$emit('submitLogin', { email: email, password: password })"
             > 
                 Login
+            </button>
+            <button
+                v-else
+                @click="$emit('submitLogout')"
+            >
+                Logout
             </button>
         </form>
         <h3 v-if="userName">Hello {{userName}}!</h3>
