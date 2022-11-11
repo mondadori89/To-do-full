@@ -127,10 +127,45 @@ var corsOptions = {
 }
 
 export const getUser = async () => {
-    const res = await fetch(`api/profile/getuser`, cors(corsOptions), { 
-        method: 'GET',
-        withCredentials: true,
+    try {
+        const res = await fetch(`api/profile/getuser`, cors(corsOptions), { 
+            method: 'GET',
+            withCredentials: true,
+        });
+        const dataFetched = res.json();
+        return dataFetched;
+    }
+    catch (error) {
+        console.log('Some error duude: ' + error)
+    }
+};
+
+
+// Register API
+
+export const registerApi = async (name, email, password, password2) => {
+    const data = { 
+        name: name,
+        email: email,
+        password: password,
+        password2: password2
+    };
+    const dataJson = JSON.stringify(data);
+    const res = await fetch(`api/register`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            withCredentials: true
+        },
+        body: dataJson,
     });
+
+    console.log(res.status);
+
+    if (res.status == 201) {
+        console.log(`Register done with Email: ${email} and Password: ${password}`);
+    }
+
     const dataFetched = res.json();
     return dataFetched;
 };

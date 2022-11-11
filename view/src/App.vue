@@ -5,11 +5,12 @@
     :userName="userName"
   />
 
-  <button id="log" @click="onGetUserInfoFromSession">Log user info</button>
+  <!-- <button id="log" @click="onGetUserInfoFromSession">Log user info</button> -->
 
   <h1>To do list</h1>
 
   <router-view :userId="userId"></router-view>
+
   <FooterComp /> 
  
 </template>
@@ -57,7 +58,7 @@ export default {
       this.userId = userFetched.user.id;
       this.userEmail = userFetched.user.email;
       this.userName = userFetched.user.name;
-    }
+    },
 
   },
   async mounted() {
@@ -82,7 +83,7 @@ export default {
 
 h1 {
   color: var(--color-branding);
-  padding-top: 5%;
+  padding-top: 2%;
 }
 
 #app {

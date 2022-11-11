@@ -5,18 +5,21 @@ const registerRouter = express.Router();
 
 registerRouter.post('/', async (req, res) => {
 	const { name, email, password, password2 } = req.body;
-
+    console.log(name, email, password, password2);
 
 	if (!name || !email || !password || !password2) {
-		res.json({ message: 'Please enter all fields' });
+        console.log('Please enter all fields');
+		res.status(401).json({ message: 'Please enter all fields' });
 	}
 	// check if password and password2 are identical
 	else if (password !== password2) {
-		res.json({ message: 'Passwords do not match' });
+        console.log('Passwords do not match');
+		res.status(401).json({ message: 'Passwords do not match' });
 	}
 	// check password length
 	else if (password.length <= 6) {
-		res.json({ message: 'Password should be more than 6 characters' });
+        console.log('Password should be more than 6 characters');
+		res.status(401).json({ message: 'Password should be more than 6 characters' });
 	}
     else {
         const salt = await bcrypt.genSalt(10);
@@ -27,13 +30,15 @@ registerRouter.post('/', async (req, res) => {
                 throw err;
             }
             if (results.rows.length > 0) {
+                console.log('Email already registered');
                 res.json({ message: 'Email already registered' });
             } else {
                 pool.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`, [name, email, hashedPassword], (err, results) => {
                     if (err) {
                         throw err;
                     }
-                    res.status(201).redirect('/'); // CHANGE TO /login after puting on Client side
+                    console.log('Register done!');
+                    res.status(201).json({ message: null });
                 });
             }
         });

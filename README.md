@@ -29,19 +29,12 @@ MVC Architecture. </br>
 ## Next steps
 
 Backend: 
-    - Register OK
-    - Login OK
-    - Session OK
-
-Frontend: 
-    - Página de Login  OK
-    - Página de to dos com nome do usuário OK
-    - Página de Register
-
-Backend: 
-    - Register user
     - Filtrar to dos dos user OK
+    - Register user OK
+    - Login com a senha encriptada
 
 Frontend:
     - Filtrar to dos dos user OK
+    - Register user OK
+    - Melhorar CSS
 
