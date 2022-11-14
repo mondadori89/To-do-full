@@ -107,8 +107,13 @@ export const loginApi = async (email, password) => {
     });
 
     console.log(res.status);
-    const userFetched = res.json();
 
+    if(res.status !== 200) {
+        const message = res.json();
+        return message
+    }
+
+    const userFetched = res.json();
     return userFetched;
 };
 

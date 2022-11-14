@@ -1,4 +1,5 @@
 const pool = require('../models/database');
+const bcrypt = require('bcryptjs');
 
 exports.getAll = async (req, res) => {
     const userId = req.params.id;
@@ -64,16 +65,22 @@ exports.validateLogin = async (req, res, next) => {
 
     if (!user) {
         console.log("Beeee wrong email!")
-        res.status(401).json({ msg: "Wrong username or password" }.end);
+        res.status(401).json({ msg: "Beeee wrong email!" }).end;
         return;
     }
 
-    if (user.password !== password) {
-        console.log("Beeee wrong password!")
-        res.status(401).json({ msg: "Wrong username or password" }).end;
-        return;
-    }
-
-    req.user = user;
-    return next();
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) {
+            throw err;
+        }
+        //if the passwords match
+        if (isMatch) {
+            req.user = user;
+            return next();
+        } else {
+            console.log("Beeee wrong password!")
+            res.status(401).json({ msg: "Beeee wrong password!" }).end;
+            return;
+        }
+    });
 };

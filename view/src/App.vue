@@ -38,9 +38,13 @@ export default {
 
     async onSubmitLogin({email, password}) {
       const userFetched = await loginApi(email, password);
-      this.userId = userFetched.id;
-      this.userEmail = userFetched.email;
-      this.userName = userFetched.name;
+      if (!userFetched.msg) {
+        this.userId = userFetched.id;
+        this.userEmail = userFetched.email;
+        this.userName = userFetched.name;
+      } else {
+        alert(userFetched.msg);
+      }
     },
 
     async onSubmitLogout() {

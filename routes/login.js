@@ -27,7 +27,7 @@ loginRouter.post('/', validateLogin, (req, res) => {
 
     const user = req.user;
     console.log(user);
-
+    
 
 	// generate a random UUID as the session token
     const sessionToken = uuid.v4();

@@ -31,7 +31,7 @@ MVC Architecture. </br>
 Backend: 
     - Filtrar to dos dos user OK
     - Register user OK
-    - Login com a senha encriptada
+    - Login com a senha encriptada OK
 
 Frontend:
     - Filtrar to dos dos user OK
