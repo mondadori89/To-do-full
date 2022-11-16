@@ -21,21 +21,12 @@ MVC Architecture. </br>
 
 ## Deploy
 
+- To put on production, verify if /models/database.js and server.js are with the right config.
 - Use: `npm run build` on the view folder to build the frontend aplication to be deployed
-- Commit on `main` branch
+- Commit on `dev` and merge to `main` branch on GitHub
 - On Heroku, deploy the app
 
 
 ## Next steps
 
-Backend: 
-    - Filtrar to dos dos user               OK
-    - Register user                         OK
-    - Login com a senha encriptada          OK
-    - Criar Order Seq ao criar usuário      OK
-
-Frontend:
-    - Filtrar to dos dos user               OK
-    - Register user                         OK
-    - Melhorar CSS                          OK
-
+Deploy na AWS?
