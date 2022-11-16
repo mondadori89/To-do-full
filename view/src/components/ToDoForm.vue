@@ -1,6 +1,6 @@
 <template>
 <div class="ToDoFormContainer">
-    <form id="toDoForm" v-on:submit.prevent="handleSubmit" >
+    <form v-if="userId" id="toDoForm" v-on:submit.prevent="handleSubmit" >
         <input type="text" v-model="toDoOnForm" />
         <br />
         <br />
@@ -11,6 +11,7 @@
             Go do it!
         </button>
     </form>
+    <router-link v-else to="/register"><button>Register new User</button></router-link>
 </div>
 </template>
 
@@ -19,12 +20,12 @@
 export default {
     name: 'ToDoForm',
     props: {
+        userId: String,
     },
     data() {
         return {
         toDoOnForm: '',
         }
-
     },
     methods: {
         handleSubmit(e) {

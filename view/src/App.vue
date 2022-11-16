@@ -1,54 +1,83 @@
 <template>
+  <HeaderComp 
+    @submitLogin="onSubmitLogin"
+    @submitLogout="onSubmitLogout"
+    :userName="userName"
+  />
+
+  <!-- <button id="log" @click="onGetUserInfoFromSession">Log user info</button> -->
 
   <h1>To do list</h1>
-  
-  <ToDoForm 
-    @submitClicked="onSubmitClicked"
-  />
 
-  <ToDosContainer 
-    :newTodo="newTodo"
-  />
-    
+  <router-view :userId="userId"></router-view>
+
+  <FooterComp /> 
+ 
 </template>
 
 
 <script>
-import ToDosContainer from './components/ToDosContainer.vue';
-import ToDoForm from './components/ToDoForm.vue';
-import { v4 as uuidv4 } from 'uuid';
-import { postToDo } from './utils';
+import HeaderComp from './components/HeaderComp.vue';
+import FooterComp from './components/FooterComp.vue';
+import { loginApi, logoutApi, getUser } from './utils';
 
 export default {
   name: 'App',
   components: {
-    ToDosContainer,
-    ToDoForm,
+    HeaderComp,
+    FooterComp,
   },
   data() {
     return {
-      newTodo: {},
+      userId: '',
+      userEmail: '',
+      userName: '',
     }
   },
   methods: {
-    async onSubmitClicked(toDoText) {
-      const newTodo = {
-        id: uuidv4(),
-        description: toDoText,
-        status: false
+
+    async onSubmitLogin({email, password}) {
+      const userFetched = await loginApi(email, password);
+      if (!userFetched.msg) {
+        this.userId = userFetched.id;
+        this.userEmail = userFetched.email;
+        this.userName = userFetched.name;
+      } else {
+        alert(userFetched.msg);
       }
-      this.newTodo = newTodo;
-      await postToDo(newTodo);
+    },
+
+    async onSubmitLogout() {
+      console.log("you are about to logout");
+      await logoutApi();
+      this.userId = '';
+      this.userEmail = '';
+      this.userName = '';
+      console.log("logout done");
     }, 
+
+    async onGetUserInfoFromSession() {
+      const userFetched = await getUser();
+      console.log(userFetched.user);
+      this.userId = userFetched.user.id;
+      this.userEmail = userFetched.user.email;
+      this.userName = userFetched.user.name;
+    },
+
   },
   async mounted() {
     console.log('App initiated');
+    this.onGetUserInfoFromSession();
   },
 }
 </script>
 
 
 <style>
+
+#log {
+  margin-top: 20px;
+}
 
 @media only screen and (max-width: 480px) {
   body {
@@ -58,7 +87,7 @@ export default {
 
 h1 {
   color: var(--color-branding);
-  padding-top: 5%;
+  padding-top: 2%;
 }
 
 #app {
