@@ -29,12 +29,13 @@ MVC Architecture. </br>
 ## Next steps
 
 Backend: 
-    - Filtrar to dos dos user OK
-    - Register user OK
-    - Login com a senha encriptada OK
+    - Filtrar to dos dos user               OK
+    - Register user                         OK
+    - Login com a senha encriptada          OK
+    - Criar Order Seq ao criar usuário      OK
 
 Frontend:
-    - Filtrar to dos dos user OK
-    - Register user OK
-    - Melhorar CSS
+    - Filtrar to dos dos user               OK
+    - Register user                         OK
+    - Melhorar CSS                          OK
 

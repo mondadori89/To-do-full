@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../models/database');
 const bcrypt = require('bcryptjs');
+const uuid = require('uuid');
 const registerRouter = express.Router();
 
 registerRouter.post('/', async (req, res) => {
@@ -33,13 +34,20 @@ registerRouter.post('/', async (req, res) => {
                 console.log('Email already registered');
                 res.json({ message: 'Email already registered' });
             } else {
-                pool.query(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`, [name, email, hashedPassword], (err, results) => {
+                const newUserId = uuid.v4();
+                pool.query(`INSERT INTO users (id, name, email, password) VALUES ($1, $2, $3, $4)`, [newUserId, name, email, hashedPassword], (err, results) => {
                     if (err) {
                         throw err;
                     }
                     console.log('Register done!');
-                    res.status(201).json({ message: null });
                 });
+                pool.query(`INSERT INTO to_dos_order (order_seq, user_id) VALUES ($1, $2)`, ['{}', newUserId], (err, results) => {
+                    if (err) {
+                        throw err;
+                    }
+                    console.log('No, really, register done!');
+                });
+                res.status(201).json({ message: null });
             }
         });
     }
