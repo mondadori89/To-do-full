@@ -93,13 +93,12 @@ export default defineComponent ({
       await this.setListOrder();
     },
     userId: async function () {
+      if (this.userId == '') {
+        return
+      }
       console.log("new guy (or no guy) on the house");
       this.list = await this.getToDos();
     }
-  },
-  async mounted() {
-    console.log('List charged');
-    this.list = await this.getToDos();
   },
 })
 </script>
