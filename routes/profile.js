@@ -20,7 +20,7 @@ const sessionHandler = (req, res) => {
 	console.log('SESSIONS >> ', sessions);
 
 	if (!sessions[sessionToken]) {
-		res.status(401).end()
+		res.status(401).json({msg: 'no session with that token...'}).end()
 		console.log('no session with that token...')
 		return
 	}
@@ -28,7 +28,7 @@ const sessionHandler = (req, res) => {
 	// if the session has expired, return an unauthorized error, and delete the session from our map
     if (sessions[sessionToken].expiresAt < Date.now()) {
         delete sessions[sessionToken]
-        res.status(401).end()
+        res.status(401).json({msg: 'your session has expired bruh'}).end()
         console.log('your session has expired bruh')
         return
     }

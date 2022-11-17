@@ -57,11 +57,15 @@ export default {
     }, 
 
     async onGetUserInfoFromSession() {
-      const userFetched = await getUser();
-      console.log(userFetched.user);
-      this.userId = userFetched.user.id;
-      this.userEmail = userFetched.user.email;
-      this.userName = userFetched.user.name;
+      const dataFetched = await getUser();
+      if (dataFetched.msg) {
+        console.log(dataFetched.msg);
+        return;
+      }
+      console.log(dataFetched.user);
+      this.userId = dataFetched.user.id;
+      this.userEmail = dataFetched.user.email;
+      this.userName = dataFetched.user.name;     
     },
 
   },
