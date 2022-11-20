@@ -7,7 +7,7 @@ const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_P
 
 const productionPool = new Pool({
     connectionString: process.env.DATABASE_URL, //Heroku addon will provide with a string called DATABASE_URL
-    ssl: { rejectUnauthorized: false }, 
+    //ssl: { rejectUnauthorized: false }, 
 });
 
 const devPool = new Pool({
