@@ -127,7 +127,7 @@ export const logoutApi = async () => {
 };
 
 var corsOptions = {
-    origin: 'http://localhost:8000',
+    origin: [ 'http://localhost:8000', 'http://localhost:8080' ],
     optionsSuccessStatus: 200
 }
 

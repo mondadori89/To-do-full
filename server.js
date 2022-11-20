@@ -15,7 +15,7 @@ const app = express();
 app.use(bodyParser.json())
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:8080',
+    origin: ['http://localhost:8080', "http://localhost:8000" ],
     credentials: true,
     exposedHeaders: ["Set-Cookie"],
 }));
