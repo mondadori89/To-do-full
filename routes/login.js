@@ -33,7 +33,7 @@ loginRouter.post('/', validateLogin, (req, res) => {
     const sessionToken = uuid.v4();
 
 	const now = new Date()
-    const expiresAt = new Date(+now + 600 * 1000)
+    const expiresAt = new Date(+now + 24 * 60 * 60 * 1000) // 24 hours
 
 	// create a session containing information about the user and expiry time
     const session = new Session(user.id, user.email, user.name, expiresAt)
